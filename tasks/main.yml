@@ -1,0 +1,4 @@
+---
+ - include: generate_image_cfg.yml
+ - include: create_new_image.yml
+...

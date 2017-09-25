@@ -1,0 +1,37 @@
+---
+ - name: Building {{ project_name }} image
+   # Should be able to use docker_image instead of command but there is a bug: https://github.com/ansible/ansible/pull/16680
+   # manually patching this bug still doesn't work because sdc-docker hasn't implmented push yet (although soon, I'm promised). Plus,
+   # Ansible push option isn't available until 2.2 is released.
+#   docker_image:
+#     tls_hostname: "{{ docker_host }}"
+#     path: "{{ build_path }}"
+#     name: "{{ img_name }}"
+#     tag: latest
+#     force: true
+#     push: no
+   command: docker build -t {{ img_name }}:latest {{ docker_src }}
+   tags:
+     - build_and_run
+     - build_only
+
+ - name: tag image with {{ img_ver }} environment variable
+   # See comment in previous task
+#   docker_image:
+#     tls_hostname: "{{ docker_host }}"
+#     path: "{{ build_path }}"
+#     name: "{{ img_name }}:latest"
+#     tag: "{{ img_ver }}"
+#     push: no
+   command: docker tag {{ img_name }}:latest {{ img_name }}:{{ img_ver }}
+   tags:
+     - build_and_run
+     - build_only
+
+ - debug:
+     msg: |
+       Once built, child images should be rebuilt and tested
+   tags:
+     - build_only
+     - build_and_run
+...
