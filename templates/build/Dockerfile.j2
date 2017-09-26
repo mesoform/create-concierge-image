@@ -4,24 +4,23 @@ LABEL description="{{ img_description }}"
 LABEL com.mesoform.baseimage="{{ is_base_image }}"
 LABEL com.joyent.autopilotpattern="{{ on_autopilot }}"
 LABEL com.mesoform.builddate="{{ date }}"
-LABEL com.mesoform.baseimage.ver="{{ img_src }}"
+LABEL com.mesoform.baseimage.ver="{{ base_img }}"
 LABEL com.docker.img.ver="{{ img_name }}:{{ img_ver }}"
 
 # Set some environment variables
-#ENV GOMAXPROCS 2
-ENV SHELL /bin/bash
 ENV DOCKER_IMG_VER="{{ img_name }}:{{ img_ver }}"
 ENV DNS_DOMAIN={{ dns_domain }}
 ENV CONSUL_AGENT={{ consul_as_agent }}
 ENV CONSUL_VERSION={{ consul_version }}
 ENV CONSUL_CHECKSUM={{ consul_checksum }}
-ENV CONSUL_UI_CHECKSUM={{ consul_ui_checksum }}
 
 # todo: have templates for alpine, debian, centos
 # Alpine packages
 RUN apk --no-cache \
     add  ca-certificates
 
+# ToDo: make this into a script and maybe just
+# RUN {{ install_script }}
 # The Consul web UI
 RUN export archive=consul_${CONSUL_VERSION}_web_ui.zip \
     && curl -Lso /tmp/${archive} https://releases.hashicorp.com/consul/${CONSUL_VERSION}/${archive} \
@@ -33,12 +32,13 @@ RUN export archive=consul_${CONSUL_VERSION}_web_ui.zip \
 
 # Put Consul data on a separate volume to avoid filesystem performance issues
 # with Docker image layers. Not necessary on Triton, but...
-# ToDo: use a condition for volumes
-VOLUME ["/data"]
+# ToDo: should be a loop over volumes variable
+VOLUME [ "{{ volumes }}" ]
 
 # We don't need to expose these ports in order for other containers on Triton
 # to reach this container in the default networking environment, but if we
 # leave this here then we get the ports as well-known environment variables
 # for purposes of linking.
-# ToDo: use ports list and Jinja
-EXPOSE 8300 8301 8301/udp 8302 8302/udp 8400 8500 53 53/udp
+EXPOSE {% for port in ports %}{{ port }} {% endfor %}
+
+# ToDo: base image on ONBUILD handlers for copying files
