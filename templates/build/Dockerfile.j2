@@ -14,21 +14,20 @@ ENV CONSUL_AGENT={{ consul_as_agent }}
 ENV CONSUL_VERSION={{ consul_version }}
 ENV CONSUL_CHECKSUM={{ consul_checksum }}
 
+# Set some build arguments
+{% if build_args is defined %}
+{% for arg in build_args %}
+ARG {{ arg }}
+{% endfor %}
+{% endif %}
+
 # todo: have templates for alpine, debian, centos
-# Alpine packages
-RUN apk --no-cache \
-    add  ca-certificates
+# if we're using an install script, like below, this may not be necessary
 
 # ToDo: make this into a script and maybe just
-# RUN {{ install_script }}
-# The Consul web UI
-RUN export archive=consul_${CONSUL_VERSION}_web_ui.zip \
-    && curl -Lso /tmp/${archive} https://releases.hashicorp.com/consul/${CONSUL_VERSION}/${archive} \
-    && echo "${CONSUL_UI_CHECKSUM}  /tmp/${archive}" | sha256sum -c \
-    && mkdir /ui \
-    && cd /ui \
-    && unzip /tmp/${archive} \
-    && rm /tmp/${archive}
+# maybe this is an ONBUILD handler as part of a base image and base images are simply created differently
+RUN {{ install_script }}
+
 
 # Put Consul data on a separate volume to avoid filesystem performance issues
 # with Docker image layers. Not necessary on Triton, but...
