@@ -14,4 +14,4 @@
   base_img: "mesoform/concierge-alpine-base-image:concierge-0.1.6"
   img_name: mesoform/concierge-{{ project_name }}
   install_script: /usr/local/bin/install.sh
-...
+
