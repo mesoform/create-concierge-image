@@ -32,8 +32,10 @@ RUN {{ install_script }}
 
 # Put Consul data on a separate volume to avoid filesystem performance issues
 # with Docker image layers. Not necessary on Triton, but...
-# ToDo: should be a loop over volumes variable
-VOLUME [ "{{ volumes }}" ]
+{% if volumes is defined %}
+VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
+{% endif %}
+
 
 # We don't need to expose these ports in order for other containers on Triton
 # to reach this container in the default networking environment, but if we
