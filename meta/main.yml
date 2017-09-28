@@ -1,5 +1,5 @@
 ---
-dependencies:
-  - { role: docker_host }
-  - { role: common }
+#dependencies:
+#  - { role: docker_host }
+#  - { role: common }
 ...

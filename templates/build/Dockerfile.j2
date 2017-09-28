@@ -1,8 +1,8 @@
 FROM {{ base_img }}
 LABEL maintainer="{{ img_maintainer }}"
 LABEL description="{{ img_description }}"
-LABEL com.mesoform.baseimage="{{ is_base_image }}"
-LABEL com.joyent.autopilotpattern="{{ on_autopilot }}"
+LABEL com.mesoform.baseimage={{ is_base_image }}
+LABEL com.joyent.autopilotpattern={{ on_autopilot }}
 LABEL com.mesoform.builddate="{{ date }}"
 LABEL com.mesoform.baseimage.ver="{{ base_img }}"
 LABEL com.docker.img.ver="{{ img_name }}:{{ img_ver }}"
@@ -26,6 +26,7 @@ ARG {{ arg }}
 
 # ToDo: make this into a script and maybe just
 # maybe this is an ONBUILD handler as part of a base image and base images are simply created differently
+RUN chmod -R +x {{ install_script }}
 RUN {{ install_script }}
 
 
