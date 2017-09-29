@@ -1,4 +1,6 @@
 FROM {{ base_img }}
+
+# Add some labels
 LABEL maintainer="{{ img_maintainer }}"
 LABEL description="{{ img_description }}"
 LABEL com.mesoform.baseimage={{ is_base_image }}
@@ -6,6 +8,11 @@ LABEL com.joyent.autopilotpattern={{ on_autopilot }}
 LABEL com.mesoform.builddate="{{ date }}"
 LABEL com.mesoform.baseimage.ver="{{ base_img }}"
 LABEL com.docker.img.ver="{{ img_name }}:{{ img_ver }}"
+{% if labels is defined %}
+{% for label in labels %}
+LABEL {{ label }}
+{% endfor %}
+{% endif %}
 
 # Set some environment variables
 ENV DOCKER_IMG_VER="{{ img_name }}:{{ img_ver }}"
@@ -13,6 +20,11 @@ ENV DNS_DOMAIN={{ dns_domain }}
 ENV CONSUL_AGENT={{ consul_as_agent }}
 ENV CONSUL_VERSION={{ consul_version }}
 ENV CONSUL_CHECKSUM={{ consul_checksum }}
+{% if env_vars is defined %}
+{% for env in env_vars %}
+ENV {{ env }}
+{% endfor %}
+{% endif %}
 
 # Set some build arguments
 {% if build_args is defined %}
@@ -21,14 +33,12 @@ ARG {{ arg }}
 {% endfor %}
 {% endif %}
 
-# todo: have templates for alpine, debian, centos
-# if we're using an install script, like below, this may not be necessary
 
-# ToDo: make this into a script and maybe just
-# maybe this is an ONBUILD handler as part of a base image and base images are simply created differently
+# If we have an install script, run it.
+{% if install_script is defined %}
 RUN chmod -R +x {{ install_script }}
 RUN {{ install_script }}
-
+{% endif %}
 
 # Put Consul data on a separate volume to avoid filesystem performance issues
 # with Docker image layers. Not necessary on Triton, but...
@@ -41,6 +51,24 @@ VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 # to reach this container in the default networking environment, but if we
 # leave this here then we get the ports as well-known environment variables
 # for purposes of linking.
+{% if ports is defined %}
 EXPOSE {% for port in ports %}{{ port }} {% endfor %}
-
+{% endif %}
 # ToDo: base image on ONBUILD handlers for copying files
+
+{% if base_image is true %}
+COPY etc /etc/
+COPY bin /usr/local/bin/
+RUN chmod -R +x /usr/local/bin/
+ONBUILD COPY etc /etc/
+ONBUILD COPY bin /usr/local/bin/
+{% endif %}
+
+
+{% if entrypoint is defined %}
+ENTRYPOINT [ {{ entrypoint }} ]
+{% endif %}
+
+{% if command is defined %}
+CMD [ {{ command }} ]
+{% endif %}
