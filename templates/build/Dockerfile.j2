@@ -56,7 +56,9 @@ EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
 # ToDo: base image on ONBUILD handlers for copying files
 
-{% if base_image is true %}
+# true should be lowercase http://jinja.pocoo.org/docs/2.9/templates/
+
+{% if is_base_image == true %}
 COPY etc /etc/
 COPY bin /usr/local/bin/
 RUN chmod -R +x /usr/local/bin/
