@@ -8,3 +8,4 @@
         - ../templates/build/*.j2
   tags:
     - configure
+    - build
