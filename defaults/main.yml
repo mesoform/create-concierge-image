@@ -1,5 +1,4 @@
 ---
-#  project_src: inline_docker_service_module
   project_root: /etc/ansible/roles/concierge-{{ project_name }}
   project_templates: "{{project_root}}/templates"
   docker_src: "{{ project_root }}/files"
