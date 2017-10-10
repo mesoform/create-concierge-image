@@ -33,3 +33,25 @@ command (string) = process or script to run as CMD. For the concierge containers
 
 Options like mem_limit are best added to compose files but other options may be added at a later date
 
+## Setting up
+### Set Docker environment variables to Docker socket
+stuff
+
+### Create new Ansible role directory for project
+
+### Create ansible.cfg file in this directory 
+with roles_path set
+
+### Pull roles
+git clone the following repositories
+
+### copy the app.yml playbook into your top-level playbook directory
+
+### create local structure for custom build
+{{ playbook_dir }}/files/bin
+{{ playbook_dir }}/files/etc
+{{ playbook_dir }}/files/test
+{{ playbook_dir }}/templates/app
+{{ playbook_dir }}/templates/orchestration
+{{ playbook_dir }}/vars
+{{ playbook_dir }}/README.MD

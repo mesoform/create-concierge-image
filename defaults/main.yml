@@ -1,7 +1,6 @@
 ---
-  project_root: /etc/ansible/roles/concierge-{{ project_name }}
-  project_templates: "{{project_root}}/templates"
-  docker_src: "{{ project_root }}/files"
+  #project_root: /etc/ansible/roles/{{ project_name }}
+  docker_src: "{{ playbook_dir }}/files"
   timezone: UTC
   date: "{{ ansible_date_time.iso8601 }}"
   is_base_image: false
@@ -15,5 +14,4 @@
   base_img_ver: concierge-0.1.6
   base_img: mesoform/concierge-{{ os_distro }}-base-image:{{ base_img_ver }}
   img_name: "{{ company }}/concierge-{{ project_name }}"
-
 
