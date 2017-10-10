@@ -26,38 +26,37 @@ ENV {{ env }}
 {% endfor %}
 {% endif %}
 
-# Set some build arguments
 {% if build_args is defined %}
+# Set some build arguments
 {% for arg in build_args %}
 ARG {{ arg }}
 {% endfor %}
 {% endif %}
 
 
-# If we have an install script, run it.
 {% if install_script is defined %}
+# If we have an install script, run it.
 RUN chmod -R +x {{ install_script }}
 RUN {{ install_script }}
 {% endif %}
 
-# Put Consul data on a separate volume to avoid filesystem performance issues
-# with Docker image layers. Not necessary on Triton, but...
 {% if volumes is defined %}
+# define volumes if set
 VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 {% endif %}
 
 
+{% if ports is defined %}
 # We don't need to expose these ports in order for other containers on Triton
 # to reach this container in the default networking environment, but if we
 # leave this here then we get the ports as well-known environment variables
 # for purposes of linking.
-{% if ports is defined %}
 EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
 
 
-# true should be lowercase http://jinja.pocoo.org/docs/2.9/templates/
 {% if is_base_image == true %}
+# true should be lowercase http://jinja.pocoo.org/docs/2.9/templates/
 COPY etc /etc/
 COPY bin /usr/local/bin/
 RUN chmod -R +x /usr/local/bin/
@@ -67,5 +66,6 @@ ONBUILD COPY bin /usr/local/bin/
 
 
 {% if entrypoint is defined %}
+# Generally for creating base images. Otherwise entrypoint should already be set to containerpilot
 ENTRYPOINT [ {{ entrypoint }} ]
 {% endif %}
