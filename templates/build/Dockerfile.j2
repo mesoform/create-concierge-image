@@ -70,6 +70,6 @@ ONBUILD COPY bin /usr/local/bin/
 ENTRYPOINT [ {{ entrypoint }} ]
 {% endif %}
 
-{% if command is defined %}
-CMD [ {{ command }} ]
-{% endif %}
+#{% if command is defined %}
+#CMD [ {{ command }} ]
+#{% endif %}
