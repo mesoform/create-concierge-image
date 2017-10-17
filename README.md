@@ -48,10 +48,10 @@ git clone the following repositories
 ### copy the app.yml playbook into your top-level playbook directory
 
 ### create local structure for custom build
-{{ playbook_dir }}/files/bin
-{{ playbook_dir }}/files/etc
-{{ playbook_dir }}/files/test
-{{ playbook_dir }}/templates/app
-{{ playbook_dir }}/templates/orchestration
-{{ playbook_dir }}/vars
-{{ playbook_dir }}/README.MD
+{{ playbook_dir }}/files/bin  
+{{ playbook_dir }}/files/etc  
+{{ playbook_dir }}/files/test  
+{{ playbook_dir }}/templates/app  
+{{ playbook_dir }}/templates/orchestration  
+{{ playbook_dir }}/vars  
+{{ playbook_dir }}/README.MD  
