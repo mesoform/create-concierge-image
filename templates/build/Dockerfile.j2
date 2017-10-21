@@ -45,6 +45,10 @@ RUN {{ install_script }}
 VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 {% endif %}
 
+{% if work_dir is defined %}
+# Set application working directory.
+WORKDIR {{ work_dir }}
+{% endif %}
 
 {% if ports is defined %}
 # We don't need to expose these ports in order for other containers on Triton
