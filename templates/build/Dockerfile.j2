@@ -76,6 +76,6 @@ ENTRYPOINT [ {{ entrypoint }} ]
 {% endif %}
 
 {% if command is defined %}
-chmod ug+x {{ command }}
+RUN chmod ug+x {{ command }}
 CMD [ {{ command }} ]
 {% endif %}
