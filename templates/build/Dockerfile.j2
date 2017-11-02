@@ -66,6 +66,7 @@ COPY bin /usr/local/bin/
 RUN chmod -R +x /usr/local/bin/
 ONBUILD COPY etc /etc/
 ONBUILD COPY bin /usr/local/bin/
+ONBUILD RUN chmod -R +x /usr/local/bin/
 {% endif %}
 
 
