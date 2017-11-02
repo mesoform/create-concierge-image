@@ -74,3 +74,8 @@ ONBUILD RUN chmod -R +x /usr/local/bin/
 # Generally for creating base images. Otherwise entrypoint should already be set to containerpilot
 ENTRYPOINT [ {{ entrypoint }} ]
 {% endif %}
+
+{% if command is defined %}
+chmod ug+x {{ command }}
+CMD [ {{ command }} ]
+{% endif %}
