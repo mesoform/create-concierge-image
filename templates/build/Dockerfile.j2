@@ -36,8 +36,10 @@ ARG {{ arg }}
 
 {% if install_script is defined %}
 # If we have an install script, run it.
-RUN chmod -R +x {{ install_script }}
-RUN {{ install_script }}
+{% for script in install_scripts %}
+RUN chmod -R +x {{ script }} && \
+    {{ script }}
+{% endfor %}
 {% endif %}
 
 {% if volumes is defined %}
