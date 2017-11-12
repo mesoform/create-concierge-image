@@ -34,8 +34,8 @@ ARG {{ arg }}
 {% endif %}
 
 
-{% if install_script is defined %}
-# If we have an install script, run it.
+{% if install_scripts is defined %}
+# If we have any install scripts, run them.
 {% for script in install_scripts %}
 RUN chmod -R +x {{ script }} && \
     {{ script }}
