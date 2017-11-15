@@ -72,6 +72,13 @@ ONBUILD RUN chmod -R +x /usr/local/bin/
 {% endif %}
 
 
+{% if additional_directories.matched > 0 %}
+{% for dir in additional_directories.files %}
+COPY {{ dir.path | basename }} /
+{% endfor %}
+{% endif %}
+
+
 {% if entrypoint is defined %}
 # Generally for creating base images. Otherwise entrypoint should already be set to containerpilot
 ENTRYPOINT [ {{ entrypoint }} ]
