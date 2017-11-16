@@ -34,12 +34,6 @@ ARG {{ arg }}
 {% endif %}
 
 
-{% if volumes is defined %}
-# define volumes if set
-VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
-{% endif %}
-
-
 {% if work_dir is defined %}
 # Set application working directory.
 WORKDIR {{ work_dir }}
@@ -70,6 +64,12 @@ COPY {{ dir.path | basename }} /{{ dir.path | basename }}/
 RUN chmod -R +x {{ script }} && \
     {{ script }}
 {% endfor %}
+{% endif %}
+
+
+{% if volumes is defined %}
+# define volumes if set
+VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 {% endif %}
 
 
