@@ -34,30 +34,15 @@ ARG {{ arg }}
 {% endif %}
 
 
-{% if install_scripts is defined %}
-# If we have any install scripts, run them.
-{% for script in install_scripts %}
-RUN chmod -R +x {{ script }} && \
-    {{ script }}
-{% endfor %}
-{% endif %}
-
 {% if volumes is defined %}
 # define volumes if set
 VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 {% endif %}
 
+
 {% if work_dir is defined %}
 # Set application working directory.
 WORKDIR {{ work_dir }}
-{% endif %}
-
-{% if ports is defined %}
-# We don't need to expose these ports in order for other containers on Triton
-# to reach this container in the default networking environment, but if we
-# leave this here then we get the ports as well-known environment variables
-# for purposes of linking.
-EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
 
 
@@ -73,9 +58,27 @@ ONBUILD RUN chmod -R +x /usr/local/bin/
 
 
 {% if additional_directories.matched > 0 %}
+# Add user-defined directories beyond default bin and etc
 {% for dir in additional_directories.files %}
-COPY {{ dir.path | basename }} /
+COPY {{ dir.path | basename }} /{{ dir.path | basename }}/
 {% endfor %}
+{% endif %}
+
+{% if install_scripts is defined %}
+# If we have any install scripts, run them.
+{% for script in install_scripts %}
+RUN chmod -R +x {{ script }} && \
+    {{ script }}
+{% endfor %}
+{% endif %}
+
+
+{% if ports is defined %}
+# We don't need to expose these ports in order for other containers on Triton
+# to reach this container in the default networking environment, but if we
+# leave this here then we get the ports as well-known environment variables
+# for purposes of linking.
+EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
 
 
