@@ -92,5 +92,5 @@ ENTRYPOINT [ {{ entrypoint }} ]
 
 # The command we pass to Containerpilot to start the application
 RUN chmod ug+x {{ command }}
-CMD [ {{ command }} ]
+CMD [ "{{ command }}" ]
 {% endif %}
