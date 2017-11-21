@@ -68,7 +68,8 @@ RUN chmod -R +x {{ script }} && \
 {% endif %}
 {% if volumes is defined %}
 
-
+# make directories
+RUN mkdir -p {% for volume in volumes %}"{{ volume }}" {% endfor %}
 # define volumes if set
 VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 {% endif %}
