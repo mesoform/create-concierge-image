@@ -88,9 +88,9 @@ EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 ENTRYPOINT [ {{ entrypoint }} ]
 {% endif %}
 {% if command is defined %}
-
+{% set command_exe = command.split() %}
 
 # The command we pass to Containerpilot to start the application
-RUN chmod ug+x {{ command }}
+RUN chmod ug+x {{ command_exe[0] }}
 CMD [ "{{ command }}" ]
 {% endif %}
