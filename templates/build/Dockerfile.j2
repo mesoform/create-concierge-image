@@ -40,7 +40,7 @@ ARG {{ arg }}
 # Set application working directory.
 WORKDIR {{ work_dir }}
 {% endif %}
-{% if is_base_image == true %}
+{% if is_base_image | default(default_is_base_image) == true %}
 
 
 # true should be lowercase http://jinja.pocoo.org/docs/2.9/templates/
