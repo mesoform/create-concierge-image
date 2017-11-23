@@ -3,8 +3,8 @@ FROM {{ base_img_name }}
 # Add some labels
 LABEL maintainer="{{ img_maintainer }}"
 LABEL description="{{ img_description }}"
-LABEL com.mesoform.baseimage={{ is_base_image }}
-LABEL com.joyent.autopilotpattern={{ on_autopilot }}
+LABEL com.mesoform.baseimage={{ is_base_image | default(default_is_base_image) }}
+LABEL com.joyent.autopilotpattern={{ on_autopilot | default(default_on_autopilot) }}
 LABEL com.mesoform.builddate="{{ date }}"
 LABEL com.mesoform.baseimage.ver="{{ base_img_name }}"
 LABEL com.docker.img.ver="{{ img_name }}"
