@@ -1,4 +1,4 @@
-FROM {{ base_img }}
+FROM {{ base_img_name }}
 
 # Add some labels
 LABEL maintainer="{{ img_maintainer }}"
@@ -6,8 +6,8 @@ LABEL description="{{ img_description }}"
 LABEL com.mesoform.baseimage={{ is_base_image }}
 LABEL com.joyent.autopilotpattern={{ on_autopilot }}
 LABEL com.mesoform.builddate="{{ date }}"
-LABEL com.mesoform.baseimage.ver="{{ base_img }}"
-LABEL com.docker.img.ver="{{ img_name | lower }}:{{ img_ver | lower }}"
+LABEL com.mesoform.baseimage.ver="{{ base_img_name }}"
+LABEL com.docker.img.ver="{{ img_name }}"
 {% if labels is defined %}
 {% for label in labels %}
 LABEL {{ label }}
@@ -15,7 +15,7 @@ LABEL {{ label }}
 {% endif %}
 
 # Set some environment variables
-ENV DOCKER_IMG_VER="{{ img_name }}:{{ img_ver }}"
+ENV DOCKER_IMG_VER="{{ img_name }}"
 ENV DNS_DOMAIN={{ dns_domain }}
 ENV CONSUL_AGENT={{ consul_as_agent }}
 ENV CONSUL_VERSION={{ consul_version }}
