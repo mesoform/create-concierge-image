@@ -7,7 +7,7 @@ LABEL com.mesoform.baseimage={{ is_base_image }}
 LABEL com.joyent.autopilotpattern={{ on_autopilot }}
 LABEL com.mesoform.builddate="{{ date }}"
 LABEL com.mesoform.baseimage.ver="{{ base_img }}"
-LABEL com.docker.img.ver="{{ img_name }}:{{ img_ver }}"
+LABEL com.docker.img.ver="{{ img_name | lower }}:{{ img_ver | lower }}"
 {% if labels is defined %}
 {% for label in labels %}
 LABEL {{ label }}
