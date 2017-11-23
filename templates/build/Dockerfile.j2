@@ -20,6 +20,8 @@ ENV DNS_DOMAIN={{ dns_domain }}
 ENV CONSUL_AGENT={{ consul_as_agent }}
 ENV CONSUL_VERSION={{ consul_version }}
 ENV CONSUL_CHECKSUM={{ consul_checksum }}
+ENV LOG_LEVEL="{{ log_level | default(default_log_level) }} "
+ENV LOG_FORMAT="{{ log_format | default(default_log_format) }} "
 {% if container_vars is defined %}
 {% for env in container_vars %}
 ENV {{ env }}
