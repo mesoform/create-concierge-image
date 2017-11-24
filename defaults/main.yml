@@ -9,7 +9,7 @@
   default_log_format: text
   consul_version: 0.8.5
   consul_checksum: 35dc317c80862c306ea5b1d9bc93709483287f992fd0797d214d1cc1848e7b62
-  base_img_ver: concierge-0.1.6
+  base_img_ver: concierge-0.1.17
   base_img_repo: mesoform/concierge-{{ os_distro }}-base-image
   base_img_name: "{{ base_img_repo | lower }}:{{ base_img_ver | lower }}"
   img_repo: "{{ company }}/concierge-{{ project_name }}"
