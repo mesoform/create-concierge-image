@@ -80,13 +80,14 @@ RUN mkdir -p {% for volume in volumes %}{{ volume }} {% endfor %}
 # define volumes if set
 VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
 {% endif %}
+{% if service_port is defined %}
+
+
+# Expose primary service port
+EXPOSE {{ service_port }}
+{% endif %}
 {% if ports is defined %}
-
-
-# We don't need to expose these ports in order for other containers on Triton
-# to reach this container in the default networking environment, but if we
-# leave this here then we get the ports as well-known environment variables
-# for purposes of linking.
+# Expose additional container ports
 EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
 {% if entrypoint is defined %}
