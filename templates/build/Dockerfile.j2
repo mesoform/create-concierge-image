@@ -1,4 +1,4 @@
-FROM {{ base_img_name }}
+FROM {{ base_img_name | default(default_base_img_name) }}
 
 # Add some labels
 LABEL maintainer="{{ img_maintainer }}"
