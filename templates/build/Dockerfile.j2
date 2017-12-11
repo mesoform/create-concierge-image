@@ -93,13 +93,7 @@ EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% if entrypoint is defined %}
 
 
-# Generally for creating base images. Otherwise entrypoint should already be set to containerpilot
+# Generally for creating base images or testing. Otherwise entrypoint should
+# already be set to containerpilot
 ENTRYPOINT [ {{ entrypoint }} ]
-{% endif %}
-{% if command is defined %}
-{% set command_exe = command.split() %}
-
-# The command we pass to Containerpilot to start the application
-RUN chmod ug+x {{ command_exe[0] }}
-CMD [ "{{ command }}" ]
 {% endif %}
