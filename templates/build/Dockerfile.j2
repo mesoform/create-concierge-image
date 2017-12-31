@@ -27,7 +27,7 @@ RUN unset CONSUL_AGENT
 ENV LOG_LEVEL="{{ log_level | default(default_log_level) }}"
 ENV LOG_FORMAT="{{ log_format | default(default_log_format) }}"
 {% if command is defined %}
-ENV COMMAND={{ command }}
+ENV COMMAND="{{ command }}"
 {% endif %}
 {% if container_vars is defined %}
 {% for env in container_vars %}
