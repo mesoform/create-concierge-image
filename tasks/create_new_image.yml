@@ -11,7 +11,7 @@
   #     tag: latest
   #     force: true
   #     push: no
-    command: docker build -t {{ img_repo | lower }}:latest {{ docker_src }}
+    command: docker build --force-rm -t {{ img_repo | lower }}:latest {{ docker_src }}
 
   - name: tag image with {{ img_ver }} environment variable
      # See comment in previous task
