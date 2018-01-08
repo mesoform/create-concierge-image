@@ -95,6 +95,12 @@ EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
 {% if entrypoint is defined %}
 
+HEALTHCHECK \
+    --interval={{ healthcheck_interval | default(default_healthcheck_interval) }}s \
+    --timeout={{ healthcheck_timeout | default(default_healthcheck_timeout) }}s \
+    --retries {{ app_restarts | default(default_app_restarts) + 1 }} \
+    CMD {{ healthcheck }}
+
 
 # Generally for creating base images or testing. Otherwise entrypoint should
 # already be set to containerpilot
