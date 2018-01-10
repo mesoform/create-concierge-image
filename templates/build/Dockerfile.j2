@@ -93,12 +93,14 @@ EXPOSE {{ service_port }}
 # Expose additional container ports
 EXPOSE {% for port in ports %}{{ port }} {% endfor %}
 {% endif %}
+{% if healthcheck is defined %}
 
 HEALTHCHECK \
     --interval={{ healthcheck_interval | default(default_healthcheck_interval) }}s \
     --timeout={{ healthcheck_timeout | default(default_healthcheck_timeout) }}s \
     --retries={{ app_restarts | default(default_app_restarts) | int + 1 }} \
     CMD {{ healthcheck }}
+{% endif %}
 {% if entrypoint is defined %}
 
 
