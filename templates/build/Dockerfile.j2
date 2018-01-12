@@ -71,8 +71,7 @@ COPY {{ dir.path | basename }} /{{ dir.path | basename }}/
 
 # If we have any install scripts, run them.
 {% for script in install_scripts %}
-RUN chmod -R +x {{ script }} && \
-    {{ script }}
+RUN chmod -R +x {{ script }} && sync && {{ script }}
 {% endfor %}
 {% endif %}
 {% if volumes is defined %}
