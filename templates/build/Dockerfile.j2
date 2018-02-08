@@ -82,7 +82,7 @@ RUN chmod -R +x {{ script }} && \
 RUN mkdir -p {% for volume in volumes %}{{ volume }} {% endfor %}
 
 # define volumes if set
-VOLUME [ {% for volume in volumes %}"{{ volume }}" {% endfor %} ]
+VOLUME {% for volume in volumes %}{{ volume }} {% endfor %}
 {% endif %}
 {% if service_port is defined %}
 
