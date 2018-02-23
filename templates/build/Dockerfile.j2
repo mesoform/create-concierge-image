@@ -16,9 +16,8 @@ LABEL {{ label }}
 
 # Set some environment variables
 ENV DOCKER_IMG_VER="{{ img_name }}"
-ENV DNS_DOMAIN={{ dns_domain }}
 {% if consul_as_agent | lower == true %}
-ENV CONSUL_AGENT={{ consul_as_agent }}
+ENV CONSUL_AGENT=true
 ENV CONSUL_VERSION={{ consul_version }}
 ENV CONSUL_CHECKSUM={{ consul_checksum }}
 {% else %}
