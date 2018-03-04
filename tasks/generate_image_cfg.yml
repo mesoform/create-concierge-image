@@ -6,6 +6,9 @@
     use_regex: yes
     patterns: '(?=.*)((?!(bin|etc)))'
   register: additional_directories
+  tags:
+    - configure
+    - build
   
 - name: generating build files
   template:
