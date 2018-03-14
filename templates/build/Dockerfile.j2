@@ -18,8 +18,10 @@ LABEL {{ label }}
 ENV DOCKER_IMG_VER="{{ img_name }}"
 {% if consul_as_agent | lower == true %}
 ENV CONSUL_AGENT=true
+{% if consul_version is defined %}
 ENV CONSUL_VERSION={{ consul_version }}
 ENV CONSUL_CHECKSUM={{ consul_checksum }}
+{% endif %}
 {% else %}
 RUN unset CONSUL_AGENT
 {% endif %}
