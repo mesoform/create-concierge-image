@@ -15,18 +15,16 @@ LABEL {{ label }}
 {% endif %}
 
 # Set some environment variables
-ENV DOCKER_IMG_VER="{{ img_name }}"
+ENV DOCKER_IMG="{{ img_name | default(default_img_name) }}"
 {% if consul_as_agent | lower == true %}
 ENV CONSUL_AGENT=true
-ENV CONSUL_VERSION={{ consul_version }}
-ENV CONSUL_CHECKSUM={{ consul_checksum }}
 {% else %}
 RUN unset CONSUL_AGENT
 {% endif %}
 ENV LOG_LEVEL="{{ log_level | default(default_log_level) }}"
 ENV LOG_FORMAT="{{ log_format | default(default_log_format) }}"
 {% if command is defined %}
-ENV COMMAND="{{ command }}"
+ENV COMMAND="{{ command | default(default_command) }}"
 {% endif %}
 {% if container_vars is defined %}
 {% for env in container_vars %}
