@@ -12,5 +12,5 @@ default_base_img_ver: latest
 default_base_img_repo: mesoform/concierge-{{ os_distro }}-base-image
 default_base_img_name: "{{ base_img_repo | default(default_base_img_repo) | lower }}:{{ base_img_ver | default(default_base_img_ver) | lower }}"
 default_img_repo: "{{ company }}/concierge-{{ project_name }}"
-default_img_name: "{{ img_repo | lower }}:{{ img_ver | lower }}"
+default_img_name: "{{ default_img_repo | lower }}:{{ img_ver | lower }}"
 default_command: "echo '`command` argument missing from configuration'"
